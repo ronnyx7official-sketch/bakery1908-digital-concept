@@ -1,0 +1,774 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FBF7F0;
+    --warm: #E8D9C0;
+    --brown: #6B3F1F;
+    --gold: #C89B4A;
+    --dark: #1A1008;
+    --muted: #8A7560;
+    --accent: #D4522A;
+  }
+
+  #root {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .nav {
+    display: flex;
+    gap: 6px;
+    padding: 1rem 1.25rem 0;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    overflow-x: auto;
+  }
+  .nav-btn {
+    padding: 8px 14px;
+    border: 0.5px solid var(--color-border-tertiary);
+    background: transparent;
+    border-radius: 8px 8px 0 0;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: none;
+    transition: all 0.15s;
+  }
+  .nav-btn.active {
+    background: var(--color-background-secondary);
+    color: var(--color-text-primary);
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+  }
+  .nav-btn:hover { color: var(--color-text-primary); }
+
+  .tab { display: none; padding: 1.5rem 1.25rem; }
+  .tab.active { display: block; }
+
+  /* PITCH TAB */
+  .pitch-hero {
+    background: var(--color-background-secondary);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border: 0.5px solid var(--color-border-tertiary);
+    text-align: center;
+  }
+  .pitch-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+  .pitch-tagline {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .pitch-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-text-primary);
+    line-height: 1.5;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .stat-card {
+    background: var(--color-background-secondary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+  .stat-label { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .pain-card {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 10px;
+    padding: 14px;
+    background: var(--color-background-primary);
+  }
+  .pain-before { border-left: 3px solid #E24B4A; }
+  .pain-after { border-left: 3px solid #1D9E75; }
+  .pain-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; margin-bottom: 8px; }
+  .pain-before .pain-label { color: #A32D2D; }
+  .pain-after .pain-label { color: #0F6E56; }
+  .pain-item { font-size: 13px; color: var(--color-text-secondary); padding: 3px 0; line-height: 1.4; }
+
+  .pitch-closing {
+    background: var(--color-background-secondary);
+    border-radius: 10px;
+    padding: 1.25rem;
+    border: 0.5px solid var(--color-border-tertiary);
+  }
+  .pitch-closing p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.7; }
+  .pitch-closing strong { color: var(--color-text-primary); font-weight: 500; }
+
+  /* PRD TAB */
+  .prd-section { margin-bottom: 1.75rem; }
+  .prd-section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+  .prd-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .prd-table td { padding: 10px 12px; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; color: var(--color-text-secondary); }
+  .prd-table td:first-child { font-weight: 500; color: var(--color-text-primary); width: 38%; }
+  .prd-table tr:last-child td { border-bottom: none; }
+  .prd-table tr:nth-child(odd) td { background: var(--color-background-secondary); }
+  .prd-table tr:nth-child(odd) td:first-child { background: var(--color-background-secondary); }
+  .prd-wrap { border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; overflow: hidden; }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-p1 { background: #FCEBEB; color: #A32D2D; }
+  .badge-p2 { background: #FAEEDA; color: #854F0B; }
+  .badge-p3 { background: #E6F1FB; color: #185FA5; }
+  .badge-ai { background: #EEEDFE; color: #3C3489; }
+
+  /* HERO TAB */
+  .hero-concepts { display: flex; flex-direction: column; gap: 14px; margin-bottom: 1.5rem; }
+  .hero-concept {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .hero-preview {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-v1 { background: #1A1008; }
+  .hero-v2 { background: #FBF7F0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .hero-v3 { background: linear-gradient(135deg, #2D1507 0%, #6B3F1F 100%); }
+
+  .hero-v1-text {
+    font-family: 'Playfair Display', serif;
+    color: #FBF7F0;
+    font-size: 28px;
+    font-weight: 900;
+    text-align: center;
+    z-index: 2;
+  }
+  .hero-v1-text span { color: #C89B4A; }
+  .hero-v1-circles {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+  }
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+  .c1 { width: 180px; height: 180px; background: #C89B4A; top: -60px; right: -30px; }
+  .c2 { width: 100px; height: 100px; background: #D4522A; bottom: -20px; left: 20px; }
+
+  .hero-v2-text {
+    font-family: 'Playfair Display', serif;
+    color: #1A1008;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+  }
+  .hero-v2-text .sub { font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; color: #8A7560; display: block; margin-top: 6px; }
+  .hero-v2-line { width: 40px; height: 1px; background: #C89B4A; margin: 8px auto; }
+
+  .hero-v3-text {
+    font-family: 'Playfair Display', serif;
+    color: white;
+    font-size: 24px;
+    font-weight: 900;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-v3-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #C89B4A;
+    color: #1A1008;
+    font-size: 9px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .hero-meta { padding: 14px; background: var(--color-background-secondary); }
+  .hero-meta-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+  .hero-meta-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+  .hero-meta-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .tag { font-size: 10px; padding: 3px 8px; border-radius: 20px; border: 0.5px solid var(--color-border-secondary); color: var(--color-text-secondary); }
+
+  /* INTERACTIONS TAB */
+  .interact-demo {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .interact-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    background: var(--color-background-secondary);
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+  .interact-header-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+  .interact-demo-area {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    background: var(--color-background-primary);
+  }
+
+  .pastry-card {
+    width: 130px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 0.5px solid var(--color-border-tertiary);
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+    background: var(--color-background-secondary);
+    user-select: none;
+  }
+  .pastry-card:hover { transform: translateY(-6px) scale(1.04) rotate(-1deg); }
+  .pastry-thumb {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+  }
+  .pastry-info { padding: 10px; }
+  .pastry-name { font-size: 12px; font-weight: 500; color: var(--color-text-primary); }
+  .pastry-price { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+
+  .pastry-grid { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+  .tilt-card {
+    width: 130px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-background-secondary);
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    position: relative;
+  }
+  .tilt-thumb {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    background: var(--color-background-secondary);
+  }
+  .tilt-info { padding: 10px; }
+  .tilt-name { font-size: 12px; font-weight: 500; color: var(--color-text-primary); }
+
+  .interact-code {
+    background: var(--color-background-secondary);
+    border-top: 0.5px solid var(--color-border-tertiary);
+    padding: 12px 14px;
+  }
+  .interact-code p { font-size: 11px; color: var(--color-text-secondary); line-height: 1.6; }
+  .interact-code code { font-family: var(--font-mono); font-size: 10px; background: var(--color-background-tertiary); padding: 1px 5px; border-radius: 3px; color: var(--color-text-primary); }
+
+  .expand-card {
+    width: 130px;
+    border-radius: 12px;
+    border: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-background-secondary);
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+  .expand-card.expanded {
+    width: 280px;
+  }
+  .expand-inner { display: flex; gap: 12px; align-items: flex-start; }
+  .expand-thumb { height: 90px; display: flex; align-items: center; justify-content: center; font-size: 40px; min-width: 130px; }
+  .expand-detail { padding: 14px 14px 14px 0; opacity: 0; transition: opacity 0.2s; min-width: 120px; }
+  .expand-card.expanded .expand-detail { opacity: 1; transition-delay: 0.15s; }
+  .expand-detail-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .expand-detail-desc { font-size: 11px; color: var(--color-text-secondary); margin-top: 4px; line-height: 1.5; }
+  .expand-detail-btn {
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 10px;
+    padding: 4px 12px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: 20px;
+    color: var(--color-text-primary);
+    background: var(--color-background-primary);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* COMPONENTS TAB */
+  .comp-section { margin-bottom: 1.75rem; }
+  .comp-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  .comp-tree {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .comp-node {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    font-size: 13px;
+    color: var(--color-text-primary);
+  }
+  .comp-node:last-child { border-bottom: none; }
+  .comp-node.level-1 { background: var(--color-background-secondary); font-weight: 500; }
+  .comp-node.level-2 { padding-left: 32px; color: var(--color-text-secondary); }
+  .comp-node.level-3 { padding-left: 52px; font-size: 12px; color: var(--color-text-tertiary); }
+  .comp-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-page { background: #378ADD; }
+  .dot-section { background: #1D9E75; }
+  .dot-component { background: #C89B4A; }
+  .dot-atom { background: #8A7560; }
+  .comp-tech { margin-left: auto; font-size: 10px; color: var(--color-text-secondary); font-family: var(--font-mono); }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .kpi-card {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 10px;
+    padding: 14px;
+    background: var(--color-background-secondary);
+  }
+  .kpi-from { font-size: 12px; color: var(--color-text-secondary); line-height: 1.4; }
+  .kpi-arrow { font-size: 11px; color: var(--color-text-tertiary); margin: 4px 0; }
+  .kpi-to { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .kpi-metric { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-secondary); margin-bottom: 6px; }
+</style>
+
+<div id="root">
+  <div class="nav">
+    <button class="nav-btn active" onclick="showTab('pitch')">Pitch</button>
+    <button class="nav-btn" onclick="showTab('prd')">PRD</button>
+    <button class="nav-btn" onclick="showTab('hero')">Hero ideas</button>
+    <button class="nav-btn" onclick="showTab('interact')">UI interactions</button>
+    <button class="nav-btn" onclick="showTab('components')">Components</button>
+  </div>
+
+  <!-- PITCH TAB -->
+  <div class="tab active" id="tab-pitch">
+    <div class="pitch-hero">
+      <div class="pitch-logo">Bakery 1908</div>
+      <div class="pitch-tagline">Digital Experience Redesign</div>
+      <div class="pitch-quote">"Right now your website is a menu.<br>Your brand deserves to feel like walking into your bakery."</div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">271K</div>
+        <div class="stat-label">Instagram followers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">$0</div>
+        <div class="stat-label">Online orders today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3×</div>
+        <div class="stat-label">Revenue potential</div>
+      </div>
+    </div>
+
+    <div class="pain-grid">
+      <div class="pain-card pain-before">
+        <div class="pain-label">Current state</div>
+        <div class="pain-item">Static menu pages</div>
+        <div class="pain-item">No online ordering</div>
+        <div class="pain-item">No brand storytelling</div>
+        <div class="pain-item">Feels like a PDF</div>
+        <div class="pain-item">40–60 perf score</div>
+      </div>
+      <div class="pain-card pain-after">
+        <div class="pain-label">New experience</div>
+        <div class="pain-item">Interactive product discovery</div>
+        <div class="pain-item">Seamless order flow</div>
+        <div class="pain-item">Immersive visual storytelling</div>
+        <div class="pain-item">Feels like the bakery</div>
+        <div class="pain-item">90+ perf score</div>
+      </div>
+    </div>
+
+    <div class="pitch-closing">
+      <p>You have a <strong>visually addictive product line</strong> and a <strong>loyal audience ready to convert</strong> — but no digital funnel to capture them. We build the bridge: a discovery-first website with online ordering, 3D product interactions, and an AI assistant that handles thousands of DMs automatically. <strong>271k followers is an audience. Let's turn it into revenue.</strong></p>
+    </div>
+  </div>
+
+  <!-- PRD TAB -->
+  <div class="tab" id="tab-prd">
+    <div class="prd-section">
+      <div class="prd-section-title">Vision</div>
+      <div class="prd-wrap">
+        <table class="prd-table">
+          <tr><td>Project</td><td>Bakery 1908 Digital Experience</td></tr>
+          <tr><td>Core idea</td><td>"Not a menu. A discovery experience."</td></tr>
+          <tr><td>Tech stack</td><td>Next.js 14 + Framer Motion + Tailwind + Stripe</td></tr>
+          <tr><td>Target launch</td><td>6 weeks from kickoff</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="prd-section">
+      <div class="prd-section-title">Features — prioritized</div>
+      <div class="prd-wrap">
+        <table class="prd-table">
+          <tr><td>Online ordering</td><td><span class="badge badge-p1">P1</span> Cart, checkout, Stripe payments</td></tr>
+          <tr><td>Interactive product grid</td><td><span class="badge badge-p1">P1</span> Hover, tilt, expand modal per item</td></tr>
+          <tr><td>Mobile-first UX</td><td><span class="badge badge-p1">P1</span> Thumb-zone navigation, swipe gestures</td></tr>
+          <tr><td>Smart menu filters</td><td><span class="badge badge-p2">P2</span> Sweet / savory / trending / new</td></tr>
+          <tr><td>Trending now section</td><td><span class="badge badge-p2">P2</span> Social-proof driven live ranking</td></tr>
+          <tr><td>AI order assistant</td><td><span class="badge badge-ai">AI</span> Claude-powered chat, trained on menu + FAQ</td></tr>
+          <tr><td>"Build your box"</td><td><span class="badge badge-p3">P3</span> Drag-to-tray selection experience</td></tr>
+          <tr><td>Live inventory tags</td><td><span class="badge badge-p3">P3</span> "Just baked" / "Selling fast" badges</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="prd-section">
+      <div class="prd-section-title">KPI targets</div>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-metric">Session time</div>
+          <div class="kpi-from">Avg ~45s</div>
+          <div class="kpi-arrow">↓ to ↑</div>
+          <div class="kpi-to">3× — target 2.5 min</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-metric">Conversion</div>
+          <div class="kpi-from">0 orders online</div>
+          <div class="kpi-arrow">→</div>
+          <div class="kpi-to">3× in-store avg</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-metric">Mobile engagement</div>
+          <div class="kpi-from">Bounce rate est. 70%+</div>
+          <div class="kpi-arrow">→</div>
+          <div class="kpi-to">+50% retention</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-metric">Perf score</div>
+          <div class="kpi-from">40–60 (current)</div>
+          <div class="kpi-arrow">→</div>
+          <div class="kpi-to">90+ (Next.js)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prd-section">
+      <div class="prd-section-title">User personas</div>
+      <div class="prd-wrap">
+        <table class="prd-table">
+          <tr><td>Instagram fan</td><td>Discovers via reel, wants to order immediately — needs zero-friction cart</td></tr>
+          <tr><td>First-time visitor</td><td>Wants to browse visually, explore variety — needs discovery UX</td></tr>
+          <tr><td>Returning customer</td><td>Knows what they want — needs fast reorder, saved favorites</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO IDEAS TAB -->
+  <div class="tab" id="tab-hero">
+    <div class="hero-concepts">
+
+      <div class="hero-concept">
+        <div class="hero-preview hero-v1">
+          <div class="hero-v1-circles">
+            <div class="circle c1"></div>
+            <div class="circle c2"></div>
+          </div>
+          <div class="hero-v1-text">Pick your <span>craving.</span></div>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-title">Concept A — Dark Immersive</div>
+          <div class="hero-meta-desc">Full-screen dark background, dramatic product photography floats on scroll. Gold accent type. Floating glassmorphism cart button. Cursor changes to a pastry emoji on product hover.</div>
+          <div class="hero-meta-tags">
+            <span class="tag">Full-screen video bg</span>
+            <span class="tag">Parallax scroll</span>
+            <span class="tag">Glassmorphism UI</span>
+            <span class="tag">Dark luxury</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-concept">
+        <div class="hero-preview hero-v2">
+          <div style="z-index: 2; position: relative; text-align: center;">
+            <div class="hero-v2-text">
+              Baked fresh. <br>Eaten fresh.
+              <span class="sub">Since 1908</span>
+            </div>
+            <div class="hero-v2-line"></div>
+          </div>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-title">Concept B — Warm Editorial</div>
+          <div class="hero-meta-desc">Cream parchment background, editorial serif type. Products animate in like a spread on a table. Handwritten-style accents. Feels like a luxury food magazine come to life.</div>
+          <div class="hero-meta-tags">
+            <span class="tag">Staggered reveals</span>
+            <span class="tag">Serif editorial</span>
+            <span class="tag">Cream + gold palette</span>
+            <span class="tag">Scroll-triggered</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-concept">
+        <div class="hero-preview hero-v3">
+          <div class="hero-v3-badge">Trending now</div>
+          <div class="hero-v3-text" style="font-size: 20px; line-height: 1.4;">
+            Croffle. Brookie.<br>
+            <span style="color: #C89B4A;">Golden Roll.</span><br>
+            <span style="font-size: 13px; font-weight: 300; opacity: 0.7; font-family: 'DM Sans', sans-serif;">tap to discover →</span>
+          </div>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-title">Concept C — Social-Native</div>
+          <div class="hero-meta-desc">TikTok-style vertical cards that the user swipes through. Each card = one hero product with full-bleed photo, social proof ("3,200 saved this week"), and an instant Order button. Built for Instagram referral traffic.</div>
+          <div class="hero-meta-tags">
+            <span class="tag">Vertical swipe</span>
+            <span class="tag">Social proof counters</span>
+            <span class="tag">Instant add-to-cart</span>
+            <span class="tag">Mobile-first</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- INTERACTIONS TAB -->
+  <div class="tab" id="tab-interact">
+
+    <div class="interact-demo">
+      <div class="interact-header">
+        <div class="interact-header-title">Hover lift effect — Brookie cards</div>
+        <span class="badge badge-p1">Live demo</span>
+      </div>
+      <div class="interact-demo-area">
+        <div class="pastry-grid">
+          <div class="pastry-card">
+            <div class="pastry-thumb" style="background: #FBF7F0;">🍫</div>
+            <div class="pastry-info">
+              <div class="pastry-name">Brookie</div>
+              <div class="pastry-price">$4.50</div>
+            </div>
+          </div>
+          <div class="pastry-card">
+            <div class="pastry-thumb" style="background: #FBF7F0;">🥐</div>
+            <div class="pastry-info">
+              <div class="pastry-name">Croffle</div>
+              <div class="pastry-price">$5.50</div>
+            </div>
+          </div>
+          <div class="pastry-card">
+            <div class="pastry-thumb" style="background: #FBF7F0;">🧅</div>
+            <div class="pastry-info">
+              <div class="pastry-name">Golden Roll</div>
+              <div class="pastry-price">$3.75</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="interact-code">
+        <p>CSS: <code>transform: translateY(-6px) scale(1.04) rotate(-1deg)</code> with <code>cubic-bezier(0.34, 1.56, 0.64, 1)</code> spring easing. In Framer Motion: <code>whileHover={{ y: -6, scale: 1.04, rotate: -1 }}</code></p>
+      </div>
+    </div>
+
+    <div class="interact-demo">
+      <div class="interact-header">
+        <div class="interact-header-title">3D tilt on cursor move — Croffle card</div>
+        <span class="badge badge-p1">Live demo</span>
+      </div>
+      <div class="interact-demo-area">
+        <div class="tilt-card" id="tiltCard">
+          <div class="tilt-thumb">🥐</div>
+          <div class="tilt-info">
+            <div class="tilt-name">Original Croffle</div>
+            <div style="font-size: 11px; color: var(--color-text-secondary); margin-top: 2px;">Move cursor over me</div>
+          </div>
+        </div>
+      </div>
+      <div class="interact-code">
+        <p>JS: track <code>mousemove</code> relative to card center → map to <code>rotateX / rotateY</code> via <code>transform: perspective(600px) rotateX()  rotateY()</code>. Reset on <code>mouseleave</code> with <code>transition: 0.4s ease</code>.</p>
+      </div>
+    </div>
+
+    <div class="interact-demo">
+      <div class="interact-header">
+        <div class="interact-header-title">Click-expand modal — Cake detail</div>
+        <span class="badge badge-p2">Live demo</span>
+      </div>
+      <div class="interact-demo-area">
+        <div class="expand-card" id="expandCard" onclick="toggleExpand()">
+          <div class="expand-inner">
+            <div class="expand-thumb">🎂</div>
+            <div class="expand-detail">
+              <div class="expand-detail-name">Mango Cream Cake</div>
+              <div class="expand-detail-desc">Fresh mango, whipped cream, sponge layers. Made daily.</div>
+              <div class="expand-detail-btn">Add to order →</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="interact-code">
+        <p>CSS width transition from <code>130px → 280px</code> with <code>cubic-bezier(0.4, 0, 0.2, 1)</code>. Detail panel fades in with <code>transition-delay: 0.15s</code> so it appears after the card expands.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COMPONENTS TAB -->
+  <div class="tab" id="tab-components">
+    <div class="comp-section">
+      <div class="comp-title">Page & component tree</div>
+      <div class="comp-tree">
+        <div class="comp-node level-1"><span class="comp-dot dot-page"></span> app/ (Next.js App Router) <span class="comp-tech">next.js</span></div>
+        <div class="comp-node level-2"><span class="comp-dot dot-section"></span> page.tsx — Homepage</div>
+        <div class="comp-node level-3"><span class="comp-dot dot-component"></span> HeroSection — full-screen intro<span class="comp-tech">framer-motion</span></div>
+        <div class="comp-node level-3"><span class="comp-dot dot-component"></span> TrendingBanner — live popular items</div>
+        <div class="comp-node level-3"><span class="comp-dot dot-component"></span> ProductGrid — interactive card grid<span class="comp-tech">r3f optional</span></div>
+        <div class="comp-node level-3"><span class="comp-dot dot-component"></span> AIAssistant — floating chat widget<span class="comp-tech">claude api</span></div>
+        <div class="comp-node level-2"><span class="comp-dot dot-section"></span> menu/page.tsx — Full Menu</div>
+        <div class="comp-node level-3"><span class="comp-dot dot-component"></span> MenuFilterBar — sweet/savory/trending</div>
+        <div class="comp-node level-3"><span class="comp-dot dot-component"></span> ProductCard — tilt + expand</div>
+        <div class="comp-node level-3"><span class="comp-dot dot-component"></span> ProductModal — full detail + add to cart</div>
+        <div class="comp-node level-2"><span class="comp-dot dot-section"></span> build-your-box/page.tsx — Box Builder</div>
+        <div class="comp-node level-3"><span class="comp-dot dot-component"></span> DraggableTray — drag-to-select<span class="comp-tech">dnd-kit</span></div>
+        <div class="comp-node level-3"><span class="comp-dot dot-component"></span> BoxSummary — selected items + total</div>
+        <div class="comp-node level-2"><span class="comp-dot dot-section"></span> cart/page.tsx — Checkout</div>
+        <div class="comp-node level-3"><span class="comp-dot dot-component"></span> CartDrawer — slide-in panel</div>
+        <div class="comp-node level-3"><span class="comp-dot dot-component"></span> CheckoutForm — Stripe Elements<span class="comp-tech">stripe</span></div>
+        <div class="comp-node level-1"><span class="comp-dot dot-page"></span> components/ui/ (shared atoms)</div>
+        <div class="comp-node level-2"><span class="comp-dot dot-component"></span> PastryCard — base hover/tilt card<span class="comp-tech">framer</span></div>
+        <div class="comp-node level-2"><span class="comp-dot dot-component"></span> TiltWrapper — 3D mouse-follow HOC</div>
+        <div class="comp-node level-2"><span class="comp-dot dot-component"></span> Badge — live/trending/new labels</div>
+        <div class="comp-node level-2"><span class="comp-dot dot-component"></span> FloatingCart — persistent cart button</div>
+        <div class="comp-node level-1"><span class="comp-dot dot-page"></span> api/ (Route Handlers)</div>
+        <div class="comp-node level-2"><span class="comp-dot dot-section"></span> api/ai/route.ts — Claude assistant<span class="comp-tech">anthropic sdk</span></div>
+        <div class="comp-node level-2"><span class="comp-dot dot-section"></span> api/checkout/route.ts — Stripe intent<span class="comp-tech">stripe</span></div>
+        <div class="comp-node level-2"><span class="comp-dot dot-section"></span> api/inventory/route.ts — live stock tags</div>
+      </div>
+    </div>
+
+    <div class="comp-section">
+      <div class="comp-title">Tech decisions</div>
+      <div class="prd-wrap">
+        <table class="prd-table">
+          <tr><td>Framework</td><td>Next.js 14 App Router — SSR for SEO, edge-ready</td></tr>
+          <tr><td>Animation</td><td>Framer Motion — spring physics, layout animations</td></tr>
+          <tr><td>3D tilt</td><td>CSS perspective + JS mousemove (no library needed)</td></tr>
+          <tr><td>Drag & drop</td><td>dnd-kit — accessible, touch-enabled</td></tr>
+          <tr><td>Payments</td><td>Stripe Elements — PCI-compliant, instant setup</td></tr>
+          <tr><td>AI chat</td><td>Anthropic Claude API — streaming responses</td></tr>
+          <tr><td>Images</td><td>next/image — WebP, lazy-load, blur placeholder</td></tr>
+          <tr><td>Styling</td><td>Tailwind CSS — consistent design tokens</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+const tiltCard = document.getElementById('tiltCard');
+tiltCard.addEventListener('mousemove', function(e) {
+  const rect = this.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const dx = (e.clientX - cx) / (rect.width / 2);
+  const dy = (e.clientY - cy) / (rect.height / 2);
+  this.style.transition = 'transform 0.05s ease';
+  this.style.transform = `perspective(600px) rotateX(${-dy * 12}deg) rotateY(${dx * 12}deg) scale(1.05)`;
+});
+tiltCard.addEventListener('mouseleave', function() {
+  this.style.transition = 'transform 0.4s ease';
+  this.style.transform = 'perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)';
+});
+
+function toggleExpand() {
+  document.getElementById('expandCard').classList.toggle('expanded');
+}
+</script>
